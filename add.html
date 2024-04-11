@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Tracking System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        h2 {
+            margin-bottom: 20px;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+        input[type="submit"] {
+            background-color: #54d758;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Inventory Tracking System</h2>
+        <form id="addItemForm">
+            <label for="itemName">Item Name:</label>
+            <input type="text" id="itemName" name="itemName" required><br>
+            <label for="itemCategory">Category:</label>
+            <select id="itemCategory" name="itemCategory" required>
+                <option value="">Select a category</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Clothing">Clothing</option>
+                <option value="Food">Food</option>
+                <option value="Books">Books</option>
+                <!-- Add more categories as needed -->
+            </select><br>
+            <label for="itemQuantity">Quantity:</label>
+            <input type="number" id="itemQuantity" name="itemQuantity" min="0" required><br>
+            <label for="itemPrice">Price:</label>
+            <input type="number" id="itemPrice" name="itemPrice" min="0" step="0.01" required><br>
+            <input type="submit" value="Add Item">
+        </form>
+        <table id="inventoryTable">
+            <tr>
+                <th>Item Name</th>
+                <th>Category</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>
+            <!-- Inventory items will be dynamically added here -->
+        </table>
+    </div>
+
+    <script>
+        document.getElementById("addItemForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            var itemName = document.getElementById("itemName").value;
+            var itemCategory = document.getElementById("itemCategory").value;
+            var itemQuantity = document.getElementById("itemQuantity").value;
+            var itemPrice = document.getElementById("itemPrice").value;
+            addItemToInventory(itemName, itemCategory, itemQuantity, itemPrice);
+            this.reset();
+        });
+
+        function addItemToInventory(name, category, quantity, price) {
+            var table = document.getElementById("inventoryTable");
+            var row = table.insertRow(-1);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+            var cell4 = row.insertCell(3);
+            var cell5 = row.insertCell(4);
+            cell1.textContent = name;
+            cell2.textContent = category;
+            cell3.textContent = quantity;
+            cell4.textContent = "Php " + parseFloat(price).toFixed(2);
+            var deleteButton = document.createElement("button");
+            deleteButton.textContent = "Delete";
+            deleteButton.addEventListener("click", function() {
+                row.remove();
+            });
+            cell5.appendChild(deleteButton);
+        }
+    </script>
+</body>
+</html>
